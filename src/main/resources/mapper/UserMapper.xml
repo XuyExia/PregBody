@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuyifan.pregbody.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.xuyifan.pregbody.bean.UserBean">
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="open_id" property="openId" />
+    <result column="avatarUrl" property="avatarurl" />
+    <result column="updateTime" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+id,name,open_id,avatarUrl,updateTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from User
+    where id = #{id}
+  </select>
+
+    <select id="selectListBySelective" parameterType="com.xuyifan.pregbody.bean.UserBean" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from User
+      <where>
+      <if test="id != null">
+      id = #{id}
+      </if>
+      <if test="name != null">
+      and name = #{name}
+      </if>
+      <if test="openId != null">
+      and open_id = #{openId}
+      </if>
+      <if test="avatarurl != null">
+      and avatarUrl = #{avatarurl}
+      </if>
+      <if test="updatetime != null">
+      and updateTime = #{updatetime}
+      </if>
+      </where>
+    </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from User
+    where id = #{id}
+  </delete>
+  <insert id="insert" parameterType="com.xuyifan.pregbody.bean.UserBean">
+    insert into User (
+    <include refid="Base_Column_List" />
+    )
+    values (
+#{id},#{name},#{openId},#{avatarurl},#{updatetime}
+     )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuyifan.pregbody.bean.UserBean">
+    insert into User
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="avatarurl != null">
+        avatarUrl,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="openId != null">
+        #{openId},
+      </if>
+      <if test="avatarurl != null">
+        #{avatarurl},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuyifan.pregbody.bean.UserBean">
+    update User
+    <set>
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="name != null">
+        name = #{name},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId},
+      </if>
+      <if test="avatarurl != null">
+        avatarUrl = #{avatarurl},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuyifan.pregbody.bean.UserBean">
+    update User
+    set
+id= #{id}
+,name= #{name}
+,open_id= #{openId}
+,avatarUrl= #{avatarurl}
+,updateTime= #{updatetime}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
